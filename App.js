@@ -1,23 +1,54 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { Text } from "react-native";
+import { Provider, connect } from "react-redux";
+import { StackNavigator, addNavigationHelpers } from "react-navigation";
 
-export default class App extends React.Component {
+import { routes } from "./navigation";
+import LoginScreen from "./screens/login/Login.screen";
+import { getStore } from "./store";
+
+const AppNavigator = StackNavigator(routes, {
+  navigationOptions: ({navigation}) => ({
+    title: navigation.state.title
+  })
+});
+
+const navReducer = (state, action) => {
+  const newState = AppNavigator.router.getStateForAction(action, state);
+  return newState || state;
+};
+
+@connect(state => ({
+  navigation: state.navigation
+}))
+class AppWithNavigationState extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <AppNavigator
+        navigation={addNavigationHelpers({
+          dispatch: this.props.dispatch,
+          state: this.props.navigation
+        })}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const store = getStore(navReducer);
+
+const userIsAuthenticated = false;
+
+export default function NCAP() {
+  return (
+    <Provider store={store}>
+      {
+        userIsAuthenticated ? (
+          <AppWithNavigationState />
+        ) : (
+          <LoginScreen />
+        )
+      }
+
+    </Provider>
+  );
+}
