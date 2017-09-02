@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo';
 
 import Button from '../../components/Button';
 
 import colors from '../../constants/colors';
+
+
 
 export default class Login extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -12,21 +15,30 @@ export default class Login extends React.Component {
   });
 
   render() {
-    console.log(colors.primary.default);
     return (
       <View style={styles.container}>
-        <Text>Open up Login.js to start working on your app!</Text>
-        <Text>Changes you make will autosdfsdfdsfmatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-
-        <Button
-          onPress={() => console.log('bla')}
-          isEnabled={true}
-          isLoading={false}
-          buttonStyle={styles.loginButton}
-          textStyle={styles.loginButtonText}
-          text={'Log In'}
+        <StatusBar
+          backgroundColor="blue"
+          barStyle="light-content"
         />
+        <LinearGradient
+          colors={['#00ADFF', '#0047E8']}
+          style={{ flex: 1, padding: 15, alignItems: 'center'}}
+        >
+          <Image
+            source={require('../../images/logo/tradeshift-logo-light.png')}
+            style={{width: 227, height: 27, marginVertical: 100}}
+          />
+
+          <Button
+            onPress={() => console.log('bla')}
+            isEnabled={true}
+            isLoading={false}
+            buttonStyle={styles.loginButton}
+            textStyle={styles.loginButtonText}
+            text={'Log In'}
+          />
+        </LinearGradient>
       </View>
     );
   }
@@ -34,7 +46,7 @@ export default class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20
+    flex: 1
   },
   form: {
     marginTop: 20
@@ -44,11 +56,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   loginButton: {
-    backgroundColor: 'white'
+    width: '100%',
+    backgroundColor: colors['primary']['default']
   },
   loginButtonText: {
-    color: '#3E464D',
-    fontWeight: 'bold'
+    color: '#FFFFFF'
   },
   signupLink: {
     color: 'rgba(255,255,255,0.6)',
