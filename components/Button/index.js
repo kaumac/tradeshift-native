@@ -10,7 +10,7 @@ const Button = ({ onPress, isEnabled, isLoading, text, buttonStyle, textStyle, .
   return (
     <View {...otherProps}>
       <TouchableView onPress={onButtonPress} style={[styles.button, buttonStyle]}>
-        {/* {(isLoading) && <ActivityIndicator style={styles.spinner} color={'grey'} />} */}
+        {(isLoading) && <ActivityIndicator style={styles.spinner} color={'grey'} />}
         {(!isLoading) && <Text style={[styles.text, textStyle]}>{text}</Text>}
       </TouchableView>
     </View>
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
     color: 'white',
+    fontFamily: 'open-sans',
     backgroundColor: 'transparent'
   }
 })

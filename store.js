@@ -3,15 +3,13 @@ import thunk from "redux-thunk";
 import createLogger from 'redux-logger';
 import promise from 'redux-promise';
 
-import { getReducersWith } from "./reducers";
+import reducers from "./reducers";
 
 const logger = createLogger();
 const initialState = {};
 
-export const getStore = navReducer => createStore(
-  getReducersWith({
-    navigation: navReducer
-  }),
+export const getStore = () => createStore(
+  reducers,
   initialState,
   applyMiddleware(thunk, logger, promise)
 );

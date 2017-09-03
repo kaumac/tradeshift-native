@@ -1,55 +1,47 @@
+import { Components } from "expo";
 import React, { Component } from "react";
-import { Text } from "react-native";
-import { Font } from "expo";
-import { Provider, connect } from "react-redux";
-import { StackNavigator, addNavigationHelpers } from "react-navigation";
+import { Provider } from "react-redux";
+import { Text, ActivityIndicator } from "react-native";
 
-import { routes } from "./navigation";
-import LoginScreen from "./screens/login/Login.screen";
+import Navigation from "./Navigation";
 import { getStore } from "./store";
+import { initializeAssets } from "./assets";
 
-const AppNavigator = StackNavigator(routes, {
-  navigationOptions: ({navigation}) => ({
-    title: navigation.state.title
-  })
-});
+import AuthenticationScreen from "./screens/Authentication/Authentication.screen";
 
-const navReducer = (state, action) => {
-  const newState = AppNavigator.router.getStateForAction(action, state);
-  return newState || state;
-};
-
-@connect(state => ({
-  navigation: state.navigation
-}))
-class AppWithNavigationState extends Component {
-  render() {
-    return (
-      <AppNavigator
-        navigation={addNavigationHelpers({
-          dispatch: this.props.dispatch,
-          state: this.props.navigation
-        })}
-      />
-    );
-  }
-}
-
-const store = getStore(navReducer);
-
+const store = getStore();
 const userIsAuthenticated = false;
 
-export default function NCAP() {
-  return (
-    <Provider store={store}>
-      {
-        userIsAuthenticated ? (
-          <AppWithNavigationState />
-        ) : (
-          <LoginScreen />
-        )
-      }
+export default class App extends Component {
+  state = {
+    assetsReady: false,
+  }
 
-    </Provider>
-  );
+  componentDidMount() {
+    const showAppContent = () => {
+      this.setState({assetsReady: true});
+    }
+
+    initializeAssets.then(function(response) {
+      showAppContent();
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        { !this.state.isReady &&
+          <ActivityIndicator />
+        }
+        {/* { !this.state.assetsReady && !userIsAuthenticated &&
+          <Navigation />
+        }
+        { this.state.assetsReady && !userIsAuthenticated &&
+          <AuthenticationScreen />
+        } */}
+      </Provider>
+    );
+  }
 }

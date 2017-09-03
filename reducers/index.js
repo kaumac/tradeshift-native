@@ -1,13 +1,8 @@
-/**
- * Created by stan229 on 5/27/16.
- */
 import { combineReducers } from "redux";
+import navigation from "./navigation/navigation.reducer";
 import cars from "./cars/cars.reducer";
 
-export const getReducersWith = extraReducers => {
-  console.log(extraReducers);
-  return combineReducers({
-    ...extraReducers,
-    cars
-  })
-};
+export default combineReducers({
+  navigation,
+  cars
+})
