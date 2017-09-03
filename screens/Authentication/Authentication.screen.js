@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, LayoutAnimation, Platform, StyleSheet, UIManager 
 import { Image, View } from 'react-native-animatable'
 
 import imgLogo from '../../assets/appIconSimple.png'
+import colors from '../../constants/colors'
 import measures from '../../constants/measures'
 
 import AuthenticationOptions from './AuthenticationOptions'
@@ -13,11 +14,11 @@ if (Platform.OS === 'android') UIManager.setLayoutAnimationEnabledExperimental(t
 
 export default class AuthScreen extends Component {
   static propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    signup: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired,
-    onSignInAnimationCompleted: PropTypes.func.isRequired // Called at the end of a succesfull login/signup animation
+    // isLoggedIn: PropTypes.bool.isRequired,
+    // isLoading: PropTypes.bool.isRequired,
+    // signup: PropTypes.func.isRequired,
+    // login: PropTypes.func.isRequired,
+    // onSignInAnimationCompleted: PropTypes.func.isRequired // Called at the end of a succesfull login/signup animation
   }
 
   state = {
@@ -55,7 +56,7 @@ export default class AuthScreen extends Component {
     const { isLoggedIn, isLoading, signup, login } = this.props
     const { visibleForm } = this.state
     // The following style is responsible of the "bounce-up from bottom" animation of the form
-    const formStyle = (!visibleForm) ? { height: 0 } : { marginTop: 40 }
+    const formStyle = (!visibleForm) ? { height: 0 } : { marginTop: 60 }
     return (
       <View style={styles.container}>
         <Image
@@ -81,7 +82,7 @@ export default class AuthScreen extends Component {
             <SignUpForm
               ref={(ref) => this.formRef = ref}
               onSignInLinkPress={() => this._setVisibleForm('LOGIN')}
-              onSignupPress={signup}
+              onSignUpPress={signup}
               isLoading={isLoading}
             />
           )}
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     marginVertical: 30
   },
   bottom: {
-    backgroundColor: '#1976D2'
+    backgroundColor: colors['primary']['default']
   }
 })
 
@@ -164,17 +165,7 @@ const styles = StyleSheet.create({
 //     justifyContent: 'center',
 //     backgroundColor: '#FFFFFF'
 //   },
-//   signInButton: {
-//     width: 600,
-//     maxWidth: '100%',
-//     backgroundColor: 'transparent',
-//     borderWidth: 1,
-//     borderColor: 'rgba(255,255,255,1)'
-//   },
-//   signInButtonText: {
-//     color: '#FFFFFF',
-//     fontSize: 14
-//   },
+
 //   signUpButton: {
 //     width: 600,
 //     maxWidth: '100%',
@@ -190,34 +181,7 @@ const styles = StyleSheet.create({
 //   createAccountButtonText: {
 //     color: 'white'
 //   },
-//   separatorContainer: {
-//     alignItems: 'center',
-//     flexDirection: 'row',
-//     marginVertical: 10
-//   },
-//   separatorLine: {
-//     flex: 1,
-//     borderWidth: StyleSheet.hairlineWidth,
-//     height: StyleSheet.hairlineWidth,
-//     borderColor: 'rgba(255,255,255,0.5)'
-//   },
-//   separatorOrWrapper: {
-//     borderWidth: StyleSheet.hairlineWidth,
-//     borderColor: 'rgba(255,255,255,0.5)',
-//     backgroundColor: "transparent",
-//     borderRadius: 16,
-//     width: 32,
-//     height: 32,
-//     marginHorizontal: 16,
-//     justifyContent: "center",
-//     alignItems: "center"
-//   },
-//   separatorOr: {
-//     color: "#333",
-//     backgroundColor: "transparent",
-//     color: 'rgba(255,255,255,0.6)',
-//     fontSize: 12
-//   },
+
 //   tradeshiftLogo: {
 //     height: measures.DEVICE_WIDTH * 0.4,
 //     width: measures.DEVICE_WIDTH * 0.4,
@@ -264,13 +228,7 @@ const styles = StyleSheet.create({
 //             text="CREATE ACCOUNT"
 //           />
 //
-//           <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={400}>
-//             <View style={styles.separatorLine} />
-//             <View style={styles.separatorOrWrapper}>
-//               <Text style={styles.separatorOr}>{'OR'}</Text>
-//             </View>
-//             <View style={styles.separatorLine} />
-//           </View>
+
 //
 //
 //           <Button

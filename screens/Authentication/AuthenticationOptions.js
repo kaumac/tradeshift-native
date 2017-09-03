@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { StyleSheet } from 'react-native'
 import { Text, View } from 'react-native-animatable'
 
-import Button from '../../components/Button'
-import measures from '../../constants/measures'
+import Button from '../../components/Button';
+import colors from '../../constants/colors';
+import measures from '../../constants/measures';
 
 export default class AuthenticationOptions extends Component {
   static propTypes = {
@@ -16,20 +17,24 @@ export default class AuthenticationOptions extends Component {
       <View style={styles.container}>
         <View animation={'zoomIn'} delay={600} duration={400}>
           <Button
-            text={'Create Account'}
+            text={'CREATE ACCOUNT'}
             onPress={this.props.onCreateAccountPress}
             buttonStyle={styles.createAccountButton}
             textStyle={styles.createAccountButtonText}
           />
         </View>
+
         <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={400}>
           <View style={styles.separatorLine} />
-          <Text style={styles.separatorOr}>{'Or'}</Text>
+          <View style={styles.separatorOrWrapper}>
+            <Text style={styles.separatorOr}>{'OR'}</Text>
+          </View>
           <View style={styles.separatorLine} />
         </View>
+
         <View animation={'zoomIn'} delay={800} duration={400}>
           <Button
-            text={'Sign In'}
+            text={'SIGN IN'}
             onPress={this.props.onSignInPress}
             buttonStyle={styles.signInButton}
             textStyle={styles.signInButtonText}
@@ -42,35 +47,57 @@ export default class AuthenticationOptions extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginHorizontal: measures.DEVICE_WIDTH * 0.1,
+    paddingVertical: measures.DEVICE_WIDTH * 0.1,
+    paddingHorizontal: measures.DEVICE_WIDTH * 0.1,
     justifyContent: 'center'
   },
   createAccountButton: {
-    backgroundColor: '#9B9FA4'
+    width: '100%',
+    height: 48,
+    backgroundColor: colors['primary']['default'],
+    borderWidth: 0
   },
   createAccountButtonText: {
+    fontSize: 14,
     color: 'white'
   },
   separatorContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 20
+    marginVertical: 10
   },
   separatorLine: {
     flex: 1,
     borderWidth: StyleSheet.hairlineWidth,
     height: StyleSheet.hairlineWidth,
-    borderColor: '#9B9FA4'
+    borderColor: '#DFDFDF'
+  },
+  separatorOrWrapper: {
+    borderWidth: 1,
+    borderColor: '#DFDFDF',
+    backgroundColor: "transparent",
+    borderRadius: 16,
+    width: 32,
+    height: 32,
+    marginHorizontal: 16,
+    justifyContent: "center",
+    alignItems: "center"
   },
   separatorOr: {
-    color: '#9B9FA4',
-    marginHorizontal: 8
+    color: "#333",
+    backgroundColor: "transparent",
+    color: '#DFDFDF',
+    fontSize: 12
   },
   signInButton: {
-    backgroundColor: '#1976D2'
+    width: '100%',
+    height: 48,
+    backgroundColor: '#FFFFFF',
+    borderColor: '#DFDFDF',
+    borderWidth: 1
   },
   signInButtonText: {
-    color: 'white'
+    fontSize: 14,
+    color: '#333333'
   }
 })

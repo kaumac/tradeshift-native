@@ -8,9 +8,9 @@ import measures from '../../constants/measures'
 
 export default class SignUpForm extends Component {
   static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    onSignUpPress: PropTypes.func.isRequired,
-    onLoginLinkPress: PropTypes.func.isRequired
+    // isLoading: PropTypes.bool.isRequired,
+    // onSignUpPress: PropTypes.func.isRequired,
+    // onLoginLinkPress: PropTypes.func.isRequired
   }
 
   state = {
@@ -31,7 +31,7 @@ export default class SignUpForm extends Component {
 
   render () {
     const { email, password, fullName } = this.state
-    const { isLoading, onLoginLinkPress, onSignUpPress } = this.props
+    const { isLoading, onSignInLinkPress, onSignUpPress } = this.props
     const isValid = email !== '' && password !== '' && fullName !== ''
     return (
       <View style={styles.container}>
@@ -84,7 +84,7 @@ export default class SignUpForm extends Component {
           <Text
             ref={(ref) => this.linkRef = ref}
             style={styles.loginLink}
-            onPress={onLoginLinkPress}
+            onPress={onSignInLinkPress}
             animation={'fadeIn'}
             duration={600}
             delay={400}

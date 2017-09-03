@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { StyleSheet } from 'react-native'
+import { AsyncStorage, StyleSheet } from 'react-native'
 import { Text, View } from 'react-native-animatable'
 
 import Button from '../../components/Button'
@@ -8,15 +8,26 @@ import measures from '../../constants/measures'
 
 export default class SignInForm extends Component {
   static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    onSignInPress: PropTypes.func.isRequired,
-    onSignupLinkPress: PropTypes.func.isRequired
+    // isLoading: PropTypes.bool.isRequired,
+    // onSignInPress: PropTypes.func.isRequired,
+    // onSignupLinkPress: PropTypes.func.isRequired
   }
 
   state = {
     email: '',
     password: '',
     fullName: ''
+  }
+
+  async authenticate() {
+    try {
+      const value = await AsyncStorage.getItem('@Tradeshift:sessionId');
+      if (value !== null){
+        console.log(value);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   hideForm = async () => {
@@ -64,18 +75,19 @@ export default class SignInForm extends Component {
         <View style={styles.footer}>
           <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
             <Button
-              onPress={() => onSignInPress(email, password)}
+              onPress={() => this.authenticate(email, password)}
               isEnabled={isValid}
               isLoading={isLoading}
-              buttonStyle={styles.loginButton}
-              textStyle={styles.loginButtonText}
+              buttonStyle={styles.signInButton}
+              textStyle={styles.signInButtonText}
               text={'Log In'}
             />
           </View>
           <Text
             ref={(ref) => this.linkRef = ref}
             style={styles.signupLink}
-            onPress={onSignupLinkPress}
+            // onPress={onSignupLinkPress}
+            onPress={() => this.authenticate(email, password)}
             animation={'fadeIn'}
             duration={600}
             delay={400}
@@ -99,12 +111,16 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center'
   },
-  loginButton: {
-    backgroundColor: 'white'
+  signInButton: {
+    width: 600,
+    maxWidth: '100%',
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,1)'
   },
-  loginButtonText: {
-    color: '#3E464D',
-    fontWeight: 'bold'
+  signInButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14
   },
   signupLink: {
     color: 'rgba(255,255,255,0.6)',

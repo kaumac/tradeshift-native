@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Text, ActivityIndicator } from "react-native";
 
+import { setInitialSessionId } from './api/authentication';
 import Navigation from "./Navigation";
 import { getStore } from "./store";
 import { initializeAssets } from "./assets";
@@ -23,6 +24,11 @@ const getComponentOrLoading = (assetsReady, userIsAuthenticated) => {
 
 export default class App extends Component {
   state = { assetsReady: false,}
+
+  componentWillMount() {
+    setInitialSessionId();
+  }
+
   componentDidMount() {
     const showAppContent = () => {
       store.dispatch(() => { type: 'bluuuuuu'})
