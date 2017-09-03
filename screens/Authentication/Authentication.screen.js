@@ -9,10 +9,11 @@ import colors from '../../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#DFDFDF'
   },
   loginButton: {
-    width: 240,
+    width: 600,
     maxWidth: '100%',
     backgroundColor: '#FFFFFF'
   },
@@ -29,8 +30,7 @@ const styles = StyleSheet.create({
   separatorContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 10,
-    paddingHorizontal: '20%'
+    marginVertical: 20
   },
   separatorLine: {
     flex: 1,
@@ -69,7 +69,7 @@ export default class Authentication extends React.Component {
           />
         </View>
         <View
-          style={{paddingVertical: 30, alignItems: 'center', backgroundColor: colors['primary']['default']}}
+          style={{padding: 40, alignItems: 'center', backgroundColor: colors['primary']['default']}}
         >
           <Button
             onPress={() => console.log('bla')}
