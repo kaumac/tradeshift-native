@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Image, StatusBar, StyleSheet, Text, View, Platform } from 'react-native';
 import { LinearGradient } from 'expo';
 
+import tradeshiftLogo from '../../assets/appIconSimple.png'
 import Button from '../../components/Button';
 import measures from '../../constants/measures';
 import colors from '../../constants/colors';
-
-const IMAGE_WIDTH = measures.DEVICE_WIDTH * 0.8
 
 if (Platform.OS === 'android') UIManager.setLayoutAnimationEnabledExperimental(true)
 
@@ -71,6 +70,14 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.6)',
     fontSize: 12
   },
+  tradeshiftLogo: {
+    height: measures.DEVICE_WIDTH * 0.4,
+    width: measures.DEVICE_WIDTH * 0.4,
+    alignSelf: 'center',
+    resizeMode: 'contain',
+    marginVertical: 10,
+    borderRadius: measures.DEVICE_WIDTH * 0.03
+  }
 })
 
 export default class Authentication extends React.Component {
@@ -89,8 +96,12 @@ export default class Authentication extends React.Component {
         />
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Image
-            source={require('../../assets/appIconSimple.png')}
-            style={{width: 180, height: 180, borderRadius: 10}}
+            animation={'bounceIn'}
+            duration={1200}
+            delay={200}
+            ref={(ref) => this.logoImgRef = ref}
+            style={styles.tradeshiftLogo}
+            source={tradeshiftLogo}
           />
         </View>
         <View
