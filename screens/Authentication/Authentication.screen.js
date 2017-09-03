@@ -12,14 +12,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#DFDFDF'
   },
-  loginButton: {
+  signInButton: {
+    width: 600,
+    maxWidth: '100%',
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,1)'
+  },
+  signInButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14
+  },
+  signUpButton: {
     width: 600,
     maxWidth: '100%',
     backgroundColor: '#FFFFFF'
   },
-  loginButtonText: {
-    color: '#464646',
-    fontSize: 16
+  signUpButtonText: {
+    color: colors['primary']['default'],
+    fontSize: 14
   },
   createAccountButton: {
     backgroundColor: '#9B9FA4'
@@ -30,7 +41,7 @@ const styles = StyleSheet.create({
   separatorContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 20
+    marginVertical: 10
   },
   separatorLine: {
     flex: 1,
@@ -38,16 +49,23 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     borderColor: 'rgba(255,255,255,0.5)'
   },
+  separatorOrWrapper: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: "transparent",
+    borderRadius: 16,
+    width: 32,
+    height: 32,
+    marginHorizontal: 16,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   separatorOr: {
-    color: 'rgba(255,255,255,0.5)',
-    marginHorizontal: 10
+    color: "#333",
+    backgroundColor: "transparent",
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 12
   },
-  signInButton: {
-    backgroundColor: '#1976D2'
-  },
-  signInButtonText: {
-    color: 'white'
-  }
 })
 
 export default class Authentication extends React.Component {
@@ -64,25 +82,27 @@ export default class Authentication extends React.Component {
         />
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Image
-            source={require('../../assets/images/logo/tradeshift-logo-light.png')}
+            source={require('../../assets/images/logo/tradeshift-logo.png')}
             style={{width: 227, height: 27}}
           />
         </View>
         <View
-          style={{padding: 40, alignItems: 'center', backgroundColor: colors['primary']['default']}}
+          style={{paddingVertical: 60, paddingHorizontal: 40, alignItems: 'center', backgroundColor: colors['primary']['default']}}
         >
           <Button
             onPress={() => console.log('bla')}
             isEnabled={true}
             isLoading={false}
-            buttonStyle={styles.loginButton}
-            textStyle={styles.loginButtonText}
-            text={'Log In'}
+            buttonStyle={styles.signUpButton}
+            textStyle={styles.signUpButtonText}
+            text="CREATE ACCOUNT"
           />
 
           <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={400}>
             <View style={styles.separatorLine} />
-            <Text style={styles.separatorOr}>{'Or'}</Text>
+            <View style={styles.separatorOrWrapper}>
+              <Text style={styles.separatorOr}>{'OR'}</Text>
+            </View>
             <View style={styles.separatorLine} />
           </View>
 
@@ -91,9 +111,9 @@ export default class Authentication extends React.Component {
             onPress={() => console.log('bla')}
             isEnabled={true}
             isLoading={false}
-            buttonStyle={styles.loginButton}
-            textStyle={styles.loginButtonText}
-            text={'Log In'}
+            buttonStyle={styles.signInButton}
+            textStyle={styles.signInButtonText}
+            text={'SIGN IN'}
           />
       </View>
 
