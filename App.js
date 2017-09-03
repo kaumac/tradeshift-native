@@ -12,6 +12,18 @@ import AuthenticationScreen from "./screens/Authentication/Authentication.screen
 const store = getStore();
 const userIsAuthenticated = false;
 
+const Testeiro = (assetsReady, userIsAuthenticated) => {
+  if(!assetsReady) {
+    return (<ActivityIndicator />)
+  }
+
+  return userIsAuthenticated ? (
+    <Navigation />
+  ) : (
+    <AuthenticationScreen />
+  )
+}
+
 export default class App extends Component {
   state = {
     assetsReady: false,
@@ -32,15 +44,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        { !this.state.isReady &&
-          <ActivityIndicator />
-        }
-        {/* { !this.state.assetsReady && !userIsAuthenticated &&
-          <Navigation />
-        }
-        { this.state.assetsReady && !userIsAuthenticated &&
-          <AuthenticationScreen />
-        } */}
+        {Testeiro(this.state.assetsReady, userIsAuthenticated)}
       </Provider>
     );
   }
