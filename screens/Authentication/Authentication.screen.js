@@ -1,16 +1,21 @@
 import React from 'react';
-import { Image, StatusBar, StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
+import { Image, StatusBar, StyleSheet, Text, View, Platform } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import Button from '../../components/Button';
 import measures from '../../constants/measures';
 import colors from '../../constants/colors';
 
+const IMAGE_WIDTH = measures.DEVICE_WIDTH * 0.8
+
+if (Platform.OS === 'android') UIManager.setLayoutAnimationEnabledExperimental(true)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#DFDFDF'
+    backgroundColor: '#FFFFFF'
   },
   signInButton: {
     width: 600,
@@ -74,6 +79,14 @@ export default class Authentication extends React.Component {
     headerRight: <Text>dfsdsdg</Text>
   });
 
+  static propTypes = {
+    // isLoggedIn: PropTypes.bool.isRequired,
+    // isLoading: PropTypes.bool.isRequired,
+    // signup: PropTypes.func.isRequired,
+    // login: PropTypes.func.isRequired,
+    // onLoginAnimationCompleted: PropTypes.func.isRequired // Called at the end of a succesfull login/signup animation
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -82,8 +95,8 @@ export default class Authentication extends React.Component {
         />
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Image
-            source={require('../../assets/images/logo/tradeshift-logo.png')}
-            style={{width: 227, height: 27}}
+            source={require('../../assets/appIconSimple.png')}
+            style={{width: 180, height: 180, borderRadius: 10}}
           />
         </View>
         <View
@@ -115,7 +128,7 @@ export default class Authentication extends React.Component {
             textStyle={styles.signInButtonText}
             text={'SIGN IN'}
           />
-      </View>
+        </View>
 
       </View>
     );
