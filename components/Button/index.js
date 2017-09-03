@@ -34,9 +34,9 @@ Button.defaultProps = {
 
 const styles = StyleSheet.create({
   button: {
-    height: 42,
+    height: 48,
     borderWidth: 1,
-    borderRadius: 21,
+    borderRadius: 24,
     alignSelf: 'stretch',
     justifyContent: 'center',
     borderColor: 'rgba(0, 0, 0, 0.1)',

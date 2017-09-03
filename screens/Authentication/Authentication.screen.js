@@ -3,12 +3,13 @@ import { Image, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import Button from '../../components/Button';
-
+import measures from '../../constants/measures';
 import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center'
   },
   loginButton: {
     width: 240,
@@ -18,6 +19,34 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: '#464646',
     fontSize: 16
+  },
+  createAccountButton: {
+    backgroundColor: '#9B9FA4'
+  },
+  createAccountButtonText: {
+    color: 'white'
+  },
+  separatorContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+    paddingHorizontal: '20%'
+  },
+  separatorLine: {
+    flex: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    height: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.5)'
+  },
+  separatorOr: {
+    color: 'rgba(255,255,255,0.5)',
+    marginHorizontal: 10
+  },
+  signInButton: {
+    backgroundColor: '#1976D2'
+  },
+  signInButtonText: {
+    color: 'white'
   }
 })
 
@@ -50,6 +79,13 @@ export default class Authentication extends React.Component {
             textStyle={styles.loginButtonText}
             text={'Log In'}
           />
+
+          <View style={styles.separatorContainer} animation={'zoomIn'} delay={700} duration={400}>
+            <View style={styles.separatorLine} />
+            <Text style={styles.separatorOr}>{'Or'}</Text>
+            <View style={styles.separatorLine} />
+          </View>
+
 
           <Button
             onPress={() => console.log('bla')}

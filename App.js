@@ -1,3 +1,5 @@
+import './ReactotronConfig';
+import Reactotron from 'reactotron-react-native'
 import { AppLoading } from "expo";
 import React, { Component } from "react";
 import { Provider } from "react-redux";
@@ -22,7 +24,11 @@ const getComponentOrLoading = (assetsReady, userIsAuthenticated) => {
 export default class App extends Component {
   state = { assetsReady: false,}
   componentDidMount() {
-    const showAppContent = () => {this.setState({assetsReady: true})}
+    const showAppContent = () => {
+      store.dispatch(() => { type: 'bluuuuuu'})
+			Reactotron.log('assets are readyyy');
+			this.setState({assetsReady: true})
+		}
     initializeAssets.then(function(response) {
       showAppContent();
     })
