@@ -79,13 +79,7 @@ export default class Authentication extends React.Component {
     headerRight: <Text>dfsdsdg</Text>
   });
 
-  static propTypes = {
-    // isLoggedIn: PropTypes.bool.isRequired,
-    // isLoading: PropTypes.bool.isRequired,
-    // signup: PropTypes.func.isRequired,
-    // login: PropTypes.func.isRequired,
-    // onLoginAnimationCompleted: PropTypes.func.isRequired // Called at the end of a succesfull login/signup animation
-  }
+  static propTypes = {}
 
   render() {
     return (
