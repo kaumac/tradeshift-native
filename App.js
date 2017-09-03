@@ -1,4 +1,4 @@
-import { Components } from "expo";
+import { AppLoading } from "expo";
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Text, ActivityIndicator } from "react-native";
@@ -12,39 +12,26 @@ import AuthenticationScreen from "./screens/Authentication/Authentication.screen
 const store = getStore();
 const userIsAuthenticated = false;
 
-const Testeiro = (assetsReady, userIsAuthenticated) => {
+const getComponentOrLoading = (assetsReady, userIsAuthenticated) => {
   if(!assetsReady) {
-    return (<ActivityIndicator />)
+    return (<AppLoading />)
   }
-
-  return userIsAuthenticated ? (
-    <Navigation />
-  ) : (
-    <AuthenticationScreen />
-  )
+  return userIsAuthenticated?(<Navigation/>):(<AuthenticationScreen/>)
 }
 
 export default class App extends Component {
-  state = {
-    assetsReady: false,
-  }
-
+  state = { assetsReady: false,}
   componentDidMount() {
-    const showAppContent = () => {
-      this.setState({assetsReady: true});
-    }
-
+    const showAppContent = () => {this.setState({assetsReady: true})}
     initializeAssets.then(function(response) {
       showAppContent();
-    }).catch(function(error) {
-      console.log(error);
-    });
+    })
   }
 
   render() {
     return (
       <Provider store={store}>
-        {Testeiro(this.state.assetsReady, userIsAuthenticated)}
+        {getComponentOrLoading(this.state.assetsReady, userIsAuthenticated)}
       </Provider>
     );
   }
