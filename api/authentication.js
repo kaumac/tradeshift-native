@@ -5,7 +5,8 @@ export const setInitialSessionId = async function() {
     if(!headers["set-cookie"]) return undefined;
     const isJsessionId = cookie => /JSESSIONID=[A-Za-z0-9]+\;/i.test(cookie);
     const cookies = headers["set-cookie"][0].split(', ');
-    const sessionId = cookies.find(isJsessionId);
+    const sessionIdRaw = cookies.find(isJsessionId);
+    const sessionId = sessionIdRaw.split(';')[0];
 
     return sessionId;
   }
