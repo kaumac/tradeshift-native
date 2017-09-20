@@ -1,9 +1,12 @@
 import { AsyncStorage } from 'react-native';
 
+function isJsessionId (cookie) {
+  return /JSESSIONID=[A-Za-z0-9]+\;/i.test(cookie);
+}
+
 export const setInitialSessionId = async function() {
   const getSessionIdFromHeaders = headers => {
     if(!headers["set-cookie"]) return undefined;
-    const isJsessionId = cookie => /JSESSIONID=[A-Za-z0-9]+\;/i.test(cookie);
     const cookies = headers["set-cookie"][0].split(', ');
     const sessionIdRaw = cookies.find(isJsessionId);
     const sessionId = sessionIdRaw.split(';')[0];
@@ -23,8 +26,10 @@ export const setInitialSessionId = async function() {
 
   fetch('https://go.tradeshift.com', {
     withCredentials: true,
-    credentials: 'same-origin'
+    credentials: 'cross-origin'
   }).then(async (response) => {
+    console.log("=================================");
+    console.log(response.headers);
     const headers = response.headers.map;
     const sessionId = getSessionIdFromHeaders(headers);
 

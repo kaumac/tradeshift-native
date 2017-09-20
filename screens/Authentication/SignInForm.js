@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { AsyncStorage, StyleSheet } from 'react-native'
 import { Text, View } from 'react-native-animatable'
 
+import { setInitialSessionId } from '../../api/authentication';
+
 import Button from '../../components/Button'
 import TextInput from '../../components/TextInput/TextInput.component'
 import measures from '../../constants/measures'
@@ -20,6 +22,7 @@ export default class SignInForm extends Component {
   }
 
   async authenticate() {
+    setInitialSessionId();
     try {
       const value = await AsyncStorage.getItem('@Tradeshift:sessionId');
       if (value !== null){
