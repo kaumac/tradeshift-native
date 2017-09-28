@@ -8,11 +8,11 @@ function getCookiesFromHeaders(headers) {
 }
 
 function isJsessionId(cookie) {
-  return /JSESSIONID=[A-Za-z0-9]+\;/i.test(cookie);
+  return /JSESSIONID=[^;]+\;/.test(cookie);
 }
 
 function isCsrf(cookie) {
-  return /csrfToken=[A-Za-z0-9]+\;/i.test(cookie);
+  return /csrfToken=[^;]+\;/.test(cookie);
 }
 
 function getSessionCookie(cookies) {
@@ -43,7 +43,7 @@ function getHeaders() {
 }
 
 async function setCookies() {
-  return getHeaders().then(headers => {
+  return getHeaders().then(async headers => {
     const cookiesList = getCookiesFromHeaders(headers);
     const sessionId = getSessionCookie(cookiesList);
     const csrfToken = getCsrfCookie(cookiesList);
