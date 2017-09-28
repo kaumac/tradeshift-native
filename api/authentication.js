@@ -45,33 +45,39 @@ function getHeaders() {
 async function setCookies() {
   return getHeaders().then(headers => {
     const cookiesList = getCookiesFromHeaders(headers);
-    const csrfToken = getCsrfCookie(cookiesList);
     const sessionId = getSessionCookie(cookiesList);
+    const csrfToken = getCsrfCookie(cookiesList);
 
-    // try {
-    //   if(sessionId) await AsyncStorage.setItem('@Tradeshift:sessionId', sessionId);
-    //   if(csrfToken) await AsyncStorage.setItem('@Tradeshift:csrfToken', csrfToken);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  })
+    return (async () => {
+      try {
+        if(sessionId) await AsyncStorage.setItem('@Tradeshift:sessionId', sessionId);
+        if(csrfToken) await AsyncStorage.setItem('@Tradeshift:csrfToken', csrfToken);
+      } catch (error) {
+        console.log(error);
+      }
+    })().then(() => {});
+  });
 }
-//
-// async function authenticateNow() {
-//   try {
-//     const value = await AsyncStorage.getItem('@Tradeshift:sessionId');
-//     if (value !== null){
-//       console.log(value);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+
+async function getCookies() {
+  try {
+    const cookies = {
+      sessionId: await AsyncStorage.getItem('@Tradeshift:sessionId'),
+      csrfToken: await AsyncStorage.getItem('@Tradeshift:csrfToken')
+    }
+
+    return cookies;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function authenticate(email, password) {
   console.log('usuário e senha: ', email, password);
   setCookies().then(() => {
-    console.log('cookies setados');
+    getCookies().then(cookies => {
+      console.log(cookies);
+    });
   }).catch(error => {
     console.log('deu ruim');
     console.log(error);
