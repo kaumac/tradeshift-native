@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { Text, ActivityIndicator } from "react-native";
 
 // import { setInitialSessionId } from './api/authentication';
-import Navigation from "./Navigation";
+import Navigation from "./navigation";
 import { getStore } from "./store";
 import { initializeAssets } from "./assets";
 
