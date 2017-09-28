@@ -25,7 +25,7 @@ function getSessionCookie(cookies) {
 function getCsrfCookie(cookies) {
   if(!cookies) return;
 
-  const csrf = cookies.find(isJsessionId);
+  const csrf = cookies.find(isCsrf);
   return csrf;
 }
 
@@ -73,13 +73,12 @@ async function getCookies() {
 }
 
 export async function authenticate(email, password) {
-  console.log('usuário e senha: ', email, password);
+  console.log('user/pass: ', email, password);
   setCookies().then(() => {
     getCookies().then(cookies => {
       console.log(cookies);
     });
   }).catch(error => {
-    console.log('deu ruim');
-    console.log(error);
+    console.warn(error);
   })
 }
