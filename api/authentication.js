@@ -1,5 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
+const JSECURITY_CHECK_URL = 'https://wpe.eu-west-1.test.ts.sv/j_spring_security_check'
+
 function getCookiesFromHeaders(headers) {
   if(!headers["set-cookie"]) return;
 
@@ -29,7 +31,7 @@ function getCsrfCookie(cookies) {
   return csrf;
 }
 
-function getHeaders() {
+async function getHeaders() {
   return fetch('https://sandbox.tradeshift.com', {
     withCredentials: true,
     credentials: 'cross-origin'
@@ -72,12 +74,38 @@ async function getCookies() {
   }
 }
 
+async function getAuthRequestData(user, password) {
+  const cookies = await getCookies();
+  const escapedCsrf = cookies.csrfToken.split(';')[0].split('csrfToken=')[0];
+  console.log(escapedCsrf);
+
+  return {
+    method: 'POST',
+    credentials: 'same-origin',
+    mode: 'same-origin',
+    body: `spring-security-redirect=&j_username=${escape(user)}&email=${escape(user)}&j_password=${escape(password)}&companyName=&picker-country=Denmark&country=DK&token=&connectto=&_saml_idp=&timezone=Europe%2FBerlin&_remember_me=&csrfToken=%242a%2410%24hxmugm07rH/cFIHydwhGLOs9HsGSyjlC0PNXxG5MkIMOwKOK1kGfa`,
+    headers: {
+      'Host': 'sandbox.tradeshift.com',
+      'Origin': 'https://sandbox.tradeshift.com',
+      'Upgrade-Insecure-Requests': 1,
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+      'Referer': 'https://sandbox.tradeshift.com',
+      'Accept':       'application/json',
+      'Content-Type': 'application/json',
+      'Cookie': `${cookies.sessionId}; ${cookies.csrfToken}`,
+    }
+  }
+}
+
 export async function authenticate(email, password) {
   console.log('user/pass: ', email, password);
-  setCookies().then(() => {
-    getCookies().then(cookies => {
-      console.log(cookies);
-    });
+  setCookies().then(async () => {
+    const authRequestData = await getAuthRequestData(email, password);
+    fetch(JSECURITY_CHECK_URL, authRequestData).then(auth => {
+      console.log(auth);
+    }).catch(error => {
+      console.log(error);
+    })
   }).catch(error => {
     console.warn(error);
   })
