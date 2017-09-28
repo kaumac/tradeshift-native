@@ -89,8 +89,7 @@ export default class SignInForm extends Component {
           <Text
             ref={(ref) => this.linkRef = ref}
             style={styles.signupLink}
-            // onPress={onSignupLinkPress}
-            onPress={() => this.authenticate}
+            onPress={this.authenticate}
             animation={'fadeIn'}
             duration={600}
             delay={400}
