@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { AsyncStorage, StyleSheet } from 'react-native'
 import { Text, View } from 'react-native-animatable'
 
-import { setInitialSessionId } from '../../api/authentication';
+import { authenticate } from '../../api/authentication';
 
 import Button from '../../components/Button'
 import TextInput from '../../components/TextInput/TextInput.component'
@@ -15,22 +15,22 @@ export default class SignInForm extends Component {
     // onSignupLinkPress: PropTypes.func.isRequired
   }
 
-  state = {
-    email: '',
-    password: '',
-    fullName: ''
-  }
+  constructor(props) {
+		super(props);
+
+		this.state = {
+      email: '',
+      password: ''
+    };
+
+		this.authenticate = this.authenticate.bind(this);
+	}
 
   async authenticate() {
-    setInitialSessionId();
-    try {
-      const value = await AsyncStorage.getItem('@Tradeshift:sessionId');
-      if (value !== null){
-        console.log(value);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    authenticate(
+      this.state.email,
+      this.state.password
+    )
   }
 
   hideForm = async () => {
@@ -78,7 +78,7 @@ export default class SignInForm extends Component {
         <View style={styles.footer}>
           <View ref={(ref) => this.buttonRef = ref} animation={'bounceIn'} duration={600} delay={400}>
             <Button
-              onPress={() => this.authenticate(email, password)}
+              onPress={this.authenticate}
               isEnabled={isValid}
               isLoading={isLoading}
               buttonStyle={styles.signInButton}
@@ -90,7 +90,7 @@ export default class SignInForm extends Component {
             ref={(ref) => this.linkRef = ref}
             style={styles.signupLink}
             // onPress={onSignupLinkPress}
-            onPress={() => this.authenticate(email, password)}
+            onPress={() => this.authenticate}
             animation={'fadeIn'}
             duration={600}
             delay={400}

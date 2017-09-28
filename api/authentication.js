@@ -1,27 +1,35 @@
 import { AsyncStorage } from 'react-native';
 
-function isJsessionId (cookie) {
+function getCookiesFromHeaders(headers) {
+  if(!headers["set-cookie"]) return undefined;
+
+  const cookies = headers["set-cookie"][0].split(', ');
+  return cookies;
+}
+
+function isJsessionId(cookie) {
   return /JSESSIONID=[A-Za-z0-9]+\;/i.test(cookie);
 }
 
-export const setInitialSessionId = async function() {
-  const getSessionIdFromHeaders = headers => {
-    if(!headers["set-cookie"]) return undefined;
-    const cookies = headers["set-cookie"][0].split(', ');
-    const sessionIdRaw = cookies.find(isJsessionId);
-    const sessionId = sessionIdRaw.split(';')[0];
+function isCsrf(cookie) {
+  return /JSESSIONID=[A-Za-z0-9]+\;/i.test(cookie);
+}
 
-    return sessionId;
-  }
+function getSessionCookie(cookies) {
+  const sessionId = cookies.find(isJsessionId);
+  return sessionId;
+}
 
-  async function storeSessionId(sessionId) {
-    if(sessionId) {
-      try {
-        return await AsyncStorage.setItem('@Tradeshift:sessionId', sessionId);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+function getCsrfCookie(cookies) {
+  const csrf = cookies.find(isJsessionId);
+  return csrf;
+}
+
+async function setCookies() {
+  try {
+    await AsyncStorage.setItem('@Tradeshift:sessionId', sessionId);
+  } catch (error) {
+    console.log(error);
   }
 
   fetch('https://go.tradeshift.com', {
@@ -33,8 +41,24 @@ export const setInitialSessionId = async function() {
     const headers = response.headers.map;
     const sessionId = getSessionIdFromHeaders(headers);
 
-    return storeSessionId(sessionId);
+    return setCookies(sessionId);
   }).catch(error => {
     console.log(error);
   })
+}
+
+async function authenticateNow() {
+  try {
+    const value = await AsyncStorage.getItem('@Tradeshift:sessionId');
+    if (value !== null){
+      console.log(value);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function authenticate(email, password) {
+  console.log(email, password);
+  setCookies();
 }
